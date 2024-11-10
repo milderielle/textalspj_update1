@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animal Prediction System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <style>
+      h1 {
+          color: rgb(0, 0, 0);
+          text-align: center;
+      }
+
+      .warning {
+          color: red;
+          font-weight: bold;
+          text-align: center;
+      }
+
+      .container {
+          background: #fffbfe;
+          font-weight: bold;
+          padding-bottom: 20px;
+          border-radius: 20px;
+      }
+
+      .animal-frame {
+          border: 2px solid #6c757d;
+          border-radius: 10px;
+          padding: 15px;
+          margin-top: 20px;
+          background-color: #f8f9fa;
+      }
+
+      .animal-frame h3 {
+          text-align: center;
+      }
+
+      .animal-frame p {
+          font-size: 16px;
+      }
+
+      .animal-img {
+          max-width: 200px;
+          display: block;
+          margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body style="background:#BCBBB8">
+    <!--=======================navbar=====================================================-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Social Persona</a>
+      </div>
+    </nav>
+
+    <!--==========================================================================================-->
+    <div class="container my-3 mt-3">
+      <h1 class="text-success">Social Persona<span class="text-success"></span></h1>
+        <h1 class="text-success">Animal Prediction System<span class="text-success">🦉</span></h1>
+
+    <!--      adding form-->
+        <form action="/predict" method="POST">
+            <div class="row">
+                <div class="col-md-4">
+                  <label for="comment">Enter Your Comment</label>
+                  <input type="text" id="comment" name="comment" placeholder="Enter your text here" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Predict Animal</button>
+                </div>
+            </div>
+        </form>
+
+        {% if result %}
+        <div class="alert alert-info mt-3" role="alert">
+          <h5>Prediction Results:</h5>
+          <ul>
+            {% for animal, percentage in result.items() %}
+              <li>{{ animal }}: {{ percentage | round(2) }}%</li>
+            {% endfor %}
+          </ul>
+          <!-- Add the highest percentage animal here -->
+          <h3>Your Social Persona is: {{ highest_animal }} with {{ highest_percentage }}%</h3>
+          <img src="{{ url_for('static', filename=highest_animal | lower + '.png') }}" alt="{{ highest_animal }}" class="animal-img">
+        </div>
+
+        <div class="animal-frame">
+          <h3>Sterotype Animal Profiles</h3>
+          <div>
+            <h4>Lion 🦁 (ENFJ)</h4>
+            <p>A lion-like user is often a natural leader, courageous and protective of those around them. They exude confidence and prioritize supporting others in achieving shared goals.</p>
+          </div>
+
+          <div>
+            <h4>Peacock 🦚 (ENFP)</h4>
+            <p>A peacock-like user is vibrant, charismatic, and naturally attracts attention. They are creative, enjoy social interactions, and inspire those around them to embrace their uniqueness.</p>
+          </div>
+
+          <div>
+            <h4>Owl 🦉 (INTP)</h4>
+            <p>An owl-like user is wise, calm, and observant. They enjoy seeking answers and analyzing information. They take a thoughtful approach to decisions with a keen eye for detail.</p>
+          </div>
+
+          <div>
+            <h4>Cat 🐱 (INTJ)</h4>
+            <p>A cat-like user values independence, deep thinking, and planning. They have a clear vision and focus on future goals, rarely relying on others and always determined to follow their own path.</p>
+          </div>
+
+          <div>
+            <h4>Dolphin 🐬 (INFP)</h4>
+            <p>Dolphin-like users are kind, sensitive, and empathetic. They prioritize emotions, value understanding, and often seek meaningful connections, bringing creativity and positive energy to their social circles.</p>
+          </div>
+
+          <div>
+            <h4>Wolf 🐺 (INFJ)</h4>
+            <p>A wolf-like user is loyal, deeply understanding, and values teamwork. They have a big-picture perspective and are dedicated to creating positive, long-term impacts, fostering harmony within their group.</p>
+          </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>
